@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import InputPostalCode from "../templates/InputPostalCode";
 import ErrorMessage from "../components/ErrorMessage";
 import SearchResult from "../templates/SearchResult";
+import { POSTAL_AREA_CODE_LENGTH, LOCAL_AREA_CODE_LENGTH } from '../constants';
 import { API } from '../api/API';
 
 const Wrapper = styled.div`
@@ -25,51 +26,53 @@ const Loading = styled.div`
   }
 `;
 
-const PostCode = () => {
-  const [postalAreaCodeValue, setPostalAreaCodeValue] = useState('');
-  const [localAreaCodeValue, setLocalAreaCodeValue] = useState('');
+const Address = () => {
+  const [postalAreaCode, setPostalAreaCode] = useState('');
+  const [localAreaCode, setLocalAreaCode] = useState('');
   const [isInputModeError, setIsInputModeError] = useState(false);
   const [isInvalidPostalCode, setIsInvalidPostalCode] = useState(false);
 
   const [isSearchClickable, setIsSearchClickable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [address1Value, setAddress1Value] = useState('');
-  const [address2Value, setAddress2Value] = useState('');
-  const [address3Value, setAddress3Value] = useState('');
+  const [address1, setAddress1] = useState('');
+  const [address2, setAddress2] = useState('');
+  const [address3, setAddress3] = useState('');
 
   useEffect(() =>{
-    if (postalAreaCodeValue.length === 3 && localAreaCodeValue.length === 4) {
+    if (postalAreaCode.length === POSTAL_AREA_CODE_LENGTH && localAreaCode.length === LOCAL_AREA_CODE_LENGTH) {
       setIsSearchClickable(true);
     } else {
       setIsSearchClickable(false);
     }
-  },[postalAreaCodeValue, localAreaCodeValue]);
+  },[postalAreaCode, localAreaCode]);
 
   const serchAddress = async () => {
     setIsLoading(true);
     setIsInvalidPostalCode(false)
-    const fullPostalCode = postalAreaCodeValue + localAreaCodeValue;
+
+    const fullPostalCode = postalAreaCode + localAreaCode;
     const response = await API.Address.get(fullPostalCode);
+
     if (response.results) {
-      setAddress1Value(response.results[0].address1);
-      setAddress2Value(response.results[0].address2);
-      setAddress3Value(response.results[0].address3);
+      setAddress1(response.results[0].address1);
+      setAddress2(response.results[0].address2);
+      setAddress3(response.results[0].address3);
       setIsLoading(false);
     } else {
-      setIsInvalidPostalCode(true);
       setIsLoading(false);
+      setIsInvalidPostalCode(true);
     }
   }
 
   const inputPostalAreaCode = e => {
     checkInputMode(e.target.value);
-    setPostalAreaCodeValue(e.target.value);
+    setPostalAreaCode(e.target.value);
   }
 
   const inputLocalAreaCode = e => {
     checkInputMode(e.target.value);
-    setLocalAreaCodeValue(e.target.value);
+    setLocalAreaCode(e.target.value);
   }
 
   const checkInputMode = inputValue => {
@@ -82,15 +85,15 @@ const PostCode = () => {
   }
 
   const inputAddress1 = e => {
-    setAddress1Value(e.target.value);
+    setAddress1(e.target.value);
   }
 
   const inputAddress2 = e => {
-    setAddress2Value(e.target.value);
+    setAddress2(e.target.value);
   }
 
   const inputAddress3 = e => {
-    setAddress3Value(e.target.value);
+    setAddress3(e.target.value);
   }
 
   const isErrorShown = isInputModeError || isInvalidPostalCode;
@@ -102,9 +105,9 @@ const PostCode = () => {
 
       <InputPostalCode
         inputPostalAreaCode={inputPostalAreaCode}
-        postalAreaCodeValue={postalAreaCodeValue}
+        postalAreaCode={postalAreaCode}
         inputLocalAreaCode={inputLocalAreaCode}
-        localAreaCodeValue={localAreaCodeValue}
+        localAreaCode={localAreaCode}
         isSearchClickable={isSearchClickable}
         onClickSearchBtn={serchAddress}
       />
@@ -115,9 +118,9 @@ const PostCode = () => {
         inputAddress1={inputAddress1}
         inputAddress2={inputAddress2}
         inputAddress3={inputAddress3}
-        address1Value={address1Value}
-        address2Value={address2Value}
-        address3Value={address3Value}
+        address1={address1}
+        address2={address2}
+        address3={address3}
       />
 
       {isLoading && (
@@ -127,4 +130,4 @@ const PostCode = () => {
   );
 };
 
-export default PostCode;
+export default Address;

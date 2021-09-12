@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Input from "../components/base/Input";
 import Button from "../components/base/Button";
 import { Colors } from '../assets/Colors';
+import { POSTAL_AREA_CODE_LENGTH, LOCAL_AREA_CODE_LENGTH } from '../constants';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,13 +37,13 @@ const ButtonWrapper = styled.div`
 `;
 
 const InputPostalCode = props => {
-  const { inputPostalAreaCode, inputLocalAreaCode, postalAreaCodeValue, localAreaCodeValue, isSearchClickable, onClickSearchBtn } = props;
+  const { inputPostalAreaCode, inputLocalAreaCode, postalAreaCode, localAreaCode, isSearchClickable, onClickSearchBtn } = props;
   return (
     <Wrapper>
       <InputWrapper>
-        <StyledInput maxlength={3} handleInput={inputPostalAreaCode} value={postalAreaCodeValue} />
+        <StyledInput maxlength={POSTAL_AREA_CODE_LENGTH} handleInput={inputPostalAreaCode} value={postalAreaCode} />
         <p>-</p>
-        <StyledInput maxlength={4} handleInput={inputLocalAreaCode} value={localAreaCodeValue} />
+        <StyledInput maxlength={LOCAL_AREA_CODE_LENGTH} handleInput={inputLocalAreaCode} value={localAreaCode} />
       </InputWrapper>
       <ButtonWrapper>
         <Button onClick={onClickSearchBtn} isActive={isSearchClickable} innertext="住所検索" />

@@ -10,20 +10,19 @@ const Wrapper = styled.div`
 
 const Address = styled.div`
   width: 100%;
-  margin: 12px 0;
-  padding: 8px;
+  margin: 16px 0;
   display: flex;
   align-items: center;
 `;
 
 const Title = styled.p`
-  width: 15%;
+  width: 80px;
   font-size: 14px;
   margin: 0 8px 0 0;
 `;
 
 const StyledInput = styled(Input)`
-  width: 80%;
+  width: calc(100% - 100px);
   text-align: left;
   border: 2px solid ${Colors.gray};
   border-radius: 4px;
@@ -35,24 +34,28 @@ const SearchResult = props => {
     inputAddress1,
     inputAddress2,
     inputAddress3,
-    address1Value,
-    address2Value,
-    address3Value
+    address1,
+    address2,
+    address3
   } = props;
 
   return (
     <Wrapper>
       <Address>
         <Title>都道府県</Title>
-        <StyledInput value={address1Value} handleInput={inputAddress1} />
+        <StyledInput value={address1} handleInput={inputAddress1} />
       </Address>
       <Address>
         <Title>市区町村</Title>
-        <StyledInput value={address2Value} handleInput={inputAddress2} />
+        <StyledInput value={address2} handleInput={inputAddress2} />
       </Address>
       <Address>
         <Title>番地</Title>
-        <StyledInput value={address3Value} handleInput={inputAddress3} />
+        <StyledInput value={address3} handleInput={inputAddress3} />
+      </Address>
+      <Address>
+        <Title>建物名</Title>
+        <StyledInput />
       </Address>
     </Wrapper>
   );

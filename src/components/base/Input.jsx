@@ -12,7 +12,7 @@ const Input = props => {
   const { maxlength, handleInput, className, value } = props;
   return (
     <>
-      <InputBox maxLength={maxlength} value={value} className={className} type="text" onChange={handleInput} />
+      <InputBox type="text" maxLength={maxlength ?? ""} value={value} className={className} onChange={handleInput} />
     </>
   );
 };

@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import PostCode from './pages/PostCode';
+import Address from './pages/Address';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <PostCode />
+    <Address />
   </React.StrictMode>,
   document.getElementById('root')
 );
